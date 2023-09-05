@@ -239,3 +239,13 @@ func (e *Entry[T, U]) SetNext(elem *T) {
 func (e *Entry[T, U]) SetPrev(elem *T) {
 	e.prev = elem
 }
+
+// A Container wraps T with an Entry.
+//
+// Container should be used with care as it can effectively make List non-intrusive.
+type Container[T any] struct {
+	Entry[Container[T], *Container[T]]
+
+	// Value is the contained value.
+	Value T
+}

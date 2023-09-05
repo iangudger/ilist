@@ -18,10 +18,7 @@ import (
 	"testing"
 )
 
-type testEntry struct {
-	Entry[testEntry, *testEntry]
-	value int
-}
+type testEntry = Container[int]
 
 func verifyEquality(t *testing.T, entries []testEntry, l *List[testEntry, *testEntry]) {
 	t.Helper()
@@ -181,13 +178,13 @@ func TestReset(t *testing.T) {
 func BenchmarkIterateForward(b *testing.B) {
 	var l List[testEntry, *testEntry]
 	for i := 0; i < 1000000; i++ {
-		l.PushBack(&testEntry{value: i})
+		l.PushBack(&testEntry{Value: i})
 	}
 
 	for i := b.N; i > 0; i-- {
 		tmp := 0
 		for e := l.Front(); e != nil; e = e.Next() {
-			tmp += e.value
+			tmp += e.Value
 		}
 	}
 }
@@ -195,13 +192,13 @@ func BenchmarkIterateForward(b *testing.B) {
 func BenchmarkIterateBackward(b *testing.B) {
 	var l List[testEntry, *testEntry]
 	for i := 0; i < 1000000; i++ {
-		l.PushBack(&testEntry{value: i})
+		l.PushBack(&testEntry{Value: i})
 	}
 
 	for i := b.N; i > 0; i-- {
 		tmp := 0
 		for e := l.Back(); e != nil; e = e.Prev() {
-			tmp += e.value
+			tmp += e.Value
 		}
 	}
 }
